@@ -26,9 +26,9 @@ Push to GitHub; Railway builds and deploys. The site serves static files and **`
 
 The “App screens” section shows phone mockups. You can use **real app screenshots**:
 
-1. Create folder: **`landing/assets/screens/`**
-2. Add PNGs: **`home.png`**, **`shop.png`**, **`cart.png`**, **`recipes.png`** (screenshots from your app).
-3. If a file is missing, the section falls back to the styled mockup.
+1. Placeholder PNGs already exist in **`landing/assets/screens/`**: `home.png`, `shop.png`, `cart.png`, `recipes.png`, `deals.png`, `voice.png`.
+2. Replace any file with your real app screenshot (same filename). If a file is missing, the section falls back to the styled mockup.
+3. To regenerate placeholders: `node scripts/create-placeholders.js` from the `landing` folder.
 
 ## Structure
 

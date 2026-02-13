@@ -1,5 +1,31 @@
 const { useState, useEffect, useRef } = React;
 
+function PhoneStatusBar() {
+  const [dayStr, setDayStr] = useState('');
+  useEffect(() => {
+    setDayStr(new Date().toLocaleDateString('en-US', { weekday: 'short' }));
+  }, []);
+  return (
+    <div className="phone-status-bar">
+      <div className="phone-status-left">
+        <span className="phone-status-time">9:41</span>
+        <span className="phone-status-date">{dayStr || 'Fri'}</span>
+      </div>
+      <div className="phone-dynamic-island" />
+      <div className="phone-status-right">
+        <span className="phone-status-battery">100%</span>
+        <span className="phone-status-battery-icon" aria-hidden="true">
+          <svg width="22" height="12" viewBox="0 0 22 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="0.5" y="0.5" width="19" height="11" rx="2.5" stroke="currentColor" strokeWidth="1.2" fill="none"/>
+            <rect x="2" y="2" width="16" height="8" rx="1" fill="currentColor"/>
+            <path d="M20 4v4a1.5 1.5 0 001.5 1.5h0" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+          </svg>
+        </span>
+      </div>
+    </div>
+  );
+}
+
 function App() {
   const [headerScrolled, setHeaderScrolled] = useState(false);
   const [activeScreen, setActiveScreen] = useState(0);
@@ -12,7 +38,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const t = setInterval(() => setActiveScreen((s) => (s + 1) % 4), 3200);
+    const t = setInterval(() => setActiveScreen((s) => (s + 1) % 6), 3200);
     return () => clearInterval(t);
   }, []);
 
@@ -28,23 +54,6 @@ function App() {
     sectionRefs.current.forEach((el) => el && observer.observe(el));
     return () => observer.disconnect();
   }, []);
-
-  const heroScreens = [
-    { bar: 'PUNJAB CASH & CARRY', content: <div className="screen-title">Deals · Shop · Cart · Recipes</div> },
-    { bar: 'All Products', content: <div className="screen-title">Search & categories</div> },
-    { bar: 'Your Cart', content: <div className="screen-title">List & COD checkout</div> },
-    { bar: 'Recipes', content: <div className="screen-title">Suggestions from your list</div> },
-  ];
-
-  const tabBarDots = (
-    <div className="phone-tabbar">
-      <span className="phone-tab active">Home</span>
-      <span className="phone-tab">Cart</span>
-      <span className="phone-tab">Recipes</span>
-      <span className="phone-tab">Deals</span>
-      <span className="phone-tab">Profile</span>
-    </div>
-  );
 
   const screenSections = [
     {
@@ -132,6 +141,37 @@ function App() {
         </div>
       ),
     },
+    {
+      id: 'deals',
+      title: 'Deals',
+      screenshot: 'assets/screens/deals.png',
+      copy: 'See current deals and promotions in one place. Tap a deal to add items to your cart. Updated regularly so you never miss a discount.',
+      mockup: (
+        <div className="mockup-deals app-content">
+          <div className="mockup-section-label">Deals & Promotions</div>
+          <div className="mockup-deal" />
+          <div className="mockup-deal" />
+          <div className="mockup-deal" />
+          <div className="mockup-section-label">This week</div>
+          <div className="mockup-deal wide" />
+        </div>
+      ),
+    },
+    {
+      id: 'voice',
+      title: 'Voice Add',
+      screenshot: 'assets/screens/voice.png',
+      copy: 'Add items by voice or type. Say "Add milk and basmati rice" – we match from 125+ products or add as custom. Try the demo or use example phrases, then hear confirmation with speech feedback.',
+      mockup: (
+        <div className="mockup-voice app-content">
+          <div className="mockup-voice-title">Add items by voice</div>
+          <div className="mockup-voice-hint">Type or speak: "Add milk and rice". We match from 125+ products.</div>
+          <div className="mockup-voice-mic">Try demo (adds milk & basmati rice)</div>
+          <div className="mockup-voice-examples">Add milk and rice · I need eggs · Get olive oil</div>
+          <div className="mockup-voice-input" />
+        </div>
+      ),
+    },
   ];
 
   return (
@@ -171,21 +211,20 @@ function App() {
             </div>
           </div>
           <div className="phone-wrap">
-            <div className="phone-frame">
+            <div className="phone-frame iphone-mockup">
               <div className="phone-screen">
-                <div className="phone-notch" />
-                {heroScreens.map((screen, i) => (
-                  <div key={i} className={`screen-slide ${i === activeScreen ? 'active' : i < activeScreen ? 'prev' : ''}`}>
-                    <div className="app-bar"><span>{screen.bar}</span></div>
-                    <div className="app-content">{screen.content}</div>
-                    {tabBarDots}
-                    <div className="dot-row">
-                      {heroScreens.map((_, j) => (
-                        <div key={j} className={`dot ${j === activeScreen ? 'active' : ''}`} />
-                      ))}
+                <PhoneStatusBar />
+                <div className="phone-hero-body">
+                  {screenSections.map((section, i) => (
+                    <div key={section.id} className={`screen-slide ${i === activeScreen ? 'active' : i < activeScreen ? 'prev' : ''}`}>
+                      <div className="screen-shot-wrap">
+                        <img src={section.screenshot} alt={section.title} className="screen-shot-img" onError={(e) => { e.target.style.display = 'none'; e.target.nextElementSibling.style.display = 'block'; }} />
+                        <div className="screen-shot-fallback" style={{ display: 'none' }}>{section.mockup}</div>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
+                <div className="phone-home-indicator" aria-hidden="true" />
               </div>
             </div>
           </div>
@@ -203,7 +242,7 @@ function App() {
 
       <section id="screens" className="screens-intro">
         <h2 className="section-title">App screens</h2>
-        <p className="section-sub">See how the app works – from home to checkout.</p>
+        <p className="section-sub">See how the app works – home, shop, cart, recipes, deals, and voice add.</p>
       </section>
 
       {screenSections.map((section, i) => (
@@ -213,14 +252,14 @@ function App() {
           ref={(el) => (sectionRefs.current[i] = el)}
         >
           <div className="screen-mockup-wrap">
-            <div className="phone-frame">
+            <div className="phone-frame iphone-mockup">
               <div className="phone-screen">
-                <div className="phone-notch" />
+                <PhoneStatusBar />
                 <div className="screen-shot-wrap">
                   <img src={section.screenshot} alt={section.title} className="screen-shot-img" onError={(e) => { e.target.style.display = 'none'; e.target.nextElementSibling.style.display = 'block'; }} />
                   <div className="screen-shot-fallback" style={{ display: 'none' }}>{section.mockup}</div>
                 </div>
-                {tabBarDots}
+                <div className="phone-home-indicator" aria-hidden="true" />
               </div>
             </div>
           </div>

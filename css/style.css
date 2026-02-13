@@ -335,6 +335,106 @@ h1, h2, h3, .hero-title, .section-title {
   flex-direction: column;
 }
 
+/* Status bar: [time day] | black pill (receiver) | [battery] – like actual phones */
+.phone-status-bar {
+  flex: 0 0 auto;
+  height: 44px;
+  min-height: 44px;
+  background: #d60034;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+  color: var(--white);
+  font-size: 0.7rem;
+  font-weight: 600;
+  line-height: 1;
+  box-sizing: border-box;
+  box-shadow: 0 2px 6px rgba(196, 30, 58, 0.25);
+  z-index: 1;
+  position: relative;
+  border-radius: 36px 36px 0 0;
+}
+.phone-status-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 1;
+  padding-right: 52px;
+  min-width: 0;
+}
+.phone-status-time,
+.phone-status-date {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  opacity: 1;
+}
+.phone-status-date {
+  opacity: 0.95;
+}
+/* Black receiver (Dynamic Island) – centred in bar, same vertical as text/icons */
+.phone-status-bar .phone-dynamic-island {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-top: 0;
+  transform: translate(-50%, -50%);
+  width: 100px;
+  height: 26px;
+  background: var(--black);
+  border-radius: 18px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  z-index: 0;
+}
+.phone-status-right {
+  display: flex;
+  align-items: center;
+  /* gap: 6px; */
+  z-index: 1;
+  padding-left: 52px;
+  min-width: 0;
+}
+.phone-status-battery {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding-left: 10px;
+}
+.phone-status-battery-icon {
+  display: inline-flex;
+  color: var(--white);
+  margin-left: 2px;
+  transform: rotate(-90deg);
+}
+.phone-status-battery-icon svg {
+  display: block;
+}
+
+/* iPhone-style home indicator (swipe bar) at bottom of mockup */
+.phone-home-indicator {
+  flex: 0 0 auto;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 8px;
+}
+.phone-home-indicator::before {
+  content: '';
+  width: 128px;
+  height: 5px;
+  background: #1d1d1f;
+  border-radius: 3px;
+}
+
+/* Hero: area below status bar (slides) */
+.phone-hero-body {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+}
+
+/* Legacy notch (kept for fallback) */
 .phone-notch {
   position: absolute;
   top: 0;
@@ -347,17 +447,48 @@ h1, h2, h3, .hero-title, .section-title {
   z-index: 2;
 }
 
+/* Sleek iPhone-style frame – less top padding so status bar sits up, no white gap */
+.iphone-mockup.phone-frame {
+  border-radius: 44px;
+  padding: 6px 10px 10px 10px;
+  box-shadow:
+    var(--shadow-lg),
+    0 0 0 1px rgba(0,0,0,0.08),
+    0 0 0 3px rgba(255,255,255,0.04),
+    inset 0 1px 0 rgba(255,255,255,0.08);
+  background: linear-gradient(165deg, #1c1c1e 0%, #0d0d0f 50%, #000 100%);
+}
+
+.iphone-mockup .phone-screen {
+  border-radius: 36px;
+}
+
+.screen-mockup-wrap .iphone-mockup.phone-frame {
+  width: 260px;
+  height: 530px;
+  border-radius: 42px;
+  padding: 5px 9px 9px 9px;
+}
+
+.screen-mockup-wrap .iphone-mockup .phone-screen {
+  border-radius: 34px;
+  padding: 0;
+}
+
+.screen-mockup-wrap .iphone-mockup .phone-status-bar {
+  border-radius: 34px 34px 0 0;
+}
+
 .screen-slide {
   position: absolute;
   inset: 0;
-  padding: 2.5rem 1rem 1rem;
+  padding: 0;
   opacity: 0;
   transform: translateX(16px);
   transition: opacity 0.5s ease, transform 0.5s ease;
   pointer-events: none;
   display: flex;
   flex-direction: column;
-  padding-bottom: 56px;
 }
 
 .screen-slide.active {
@@ -407,28 +538,6 @@ h1, h2, h3, .hero-title, .section-title {
 .card-row { display: flex; gap: 8px; margin-bottom: 10px; }
 .mini-card { flex: 1; height: 56px; background: var(--gray-100); border-radius: 10px; }
 .mini-card.wide { flex: 0 0 100%; height: 44px; }
-
-/* Phone bottom tab bar (matches app) */
-.phone-tabbar {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 48px;
-  background: var(--white);
-  border-top: 1px solid var(--gray-200);
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  padding: 4px 0 8px;
-  box-shadow: 0 -2px 10px rgba(0,0,0,0.04);
-}
-.phone-tab {
-  font-size: 0.55rem;
-  color: var(--gray-500);
-  font-weight: 500;
-}
-.phone-tab.active { color: var(--red); font-weight: 600; }
 
 /* Screenshot or mockup inside phone */
 .screen-shot-wrap {
@@ -491,7 +600,7 @@ h1, h2, h3, .hero-title, .section-title {
 .banner-item {
   color: rgba(255,255,255,0.95);
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 0.875rem;
   letter-spacing: 0.02em;
 }
 
@@ -588,7 +697,7 @@ h1, h2, h3, .hero-title, .section-title {
 
 .screen-mockup-wrap .phone-screen {
   border-radius: 26px;
-  padding: 2.25rem 0.75rem 0;
+  padding: 0;
 }
 
 .screen-mockup-wrap .app-content {
@@ -643,6 +752,14 @@ h1, h2, h3, .hero-title, .section-title {
   border-radius: 8px;
   margin-bottom: 6px;
 }
+.mockup-deals .mockup-section-label { font-size: 0.65rem; font-weight: 700; color: var(--blue); margin-bottom: 6px; }
+.mockup-deals .mockup-deal {
+  height: 36px;
+  background: linear-gradient(90deg, var(--red) 0%, var(--red-dark) 100%);
+  border-radius: 8px;
+  margin-bottom: 6px;
+}
+.mockup-deals .mockup-deal.wide { height: 44px; }
 .mockup-home .mockup-cards { display: flex; gap: 6px; margin-top: 8px; }
 .mockup-home .mockup-product-card { flex: 1; height: 72px; background: var(--gray-100); border-radius: 8px; }
 
@@ -675,6 +792,36 @@ h1, h2, h3, .hero-title, .section-title {
 .mockup-recipes .mockup-label { font-size: 0.7rem; font-weight: 700; color: var(--blue); margin-bottom: 8px; }
 .mockup-recipes .mockup-recipe-card { height: 56px; background: var(--gray-100); border-radius: 8px; margin-bottom: 8px; }
 .mockup-recipes .mockup-recipe-card:nth-child(3) { height: 48px; }
+
+/* Products section mockup (fallback when products.png missing) */
+.mockup-products .mockup-search { height: 32px; background: var(--gray-100); border-radius: 8px; margin-bottom: 10px; }
+.mockup-products .mockup-cats { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+.mockup-products .mockup-cat {
+  padding: 4px 10px;
+  font-size: 0.6rem;
+  border-radius: 20px;
+  background: var(--gray-100);
+  color: var(--gray-500);
+}
+.mockup-products .mockup-cat.active { background: var(--red); color: var(--white); }
+.mockup-products .mockup-product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.mockup-products .mockup-product-tile { height: 88px; background: var(--gray-100); border-radius: 8px; }
+
+/* Voice Add section mockup (fallback when voice.png missing) */
+.mockup-voice .mockup-voice-title { font-size: 0.8rem; font-weight: 700; color: var(--blue); margin-bottom: 4px; }
+.mockup-voice .mockup-voice-hint { font-size: 0.6rem; color: var(--gray-500); margin-bottom: 10px; line-height: 1.35; }
+.mockup-voice .mockup-voice-mic {
+  background: var(--red);
+  color: var(--white);
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 10px 12px;
+  border-radius: 12px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.mockup-voice .mockup-voice-examples { font-size: 0.55rem; color: var(--gray-500); margin-bottom: 8px; }
+.mockup-voice .mockup-voice-input { height: 36px; background: var(--gray-100); border-radius: 8px; }
 
 /* CTA – stronger */
 .cta-section {
