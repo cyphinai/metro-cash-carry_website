@@ -7,7 +7,7 @@ const path = require('path');
 const port = process.env.PORT || 3000;
 const cwd = path.resolve(__dirname);
 
-const child = spawn('npx', ['serve', '-s', cwd, '-l', String(port)], {
+const child = spawn('npx', ['serve', '-s', cwd, '-l', String(port), '--no-clipboard'], {
   stdio: 'inherit',
   shell: true,
   env: { ...process.env, PORT: String(port) },
