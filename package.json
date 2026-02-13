@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "serve -s . -l $PORT",
+    "start": "node start.js",
     "dev": "serve -s . -l 3000"
   },
   "dependencies": {
