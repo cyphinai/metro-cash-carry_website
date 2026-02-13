@@ -36,11 +36,22 @@ function App() {
     { bar: 'Recipes', content: <div className="screen-title">Suggestions from your list</div> },
   ];
 
+  const tabBarDots = (
+    <div className="phone-tabbar">
+      <span className="phone-tab active">Home</span>
+      <span className="phone-tab">Cart</span>
+      <span className="phone-tab">Recipes</span>
+      <span className="phone-tab">Deals</span>
+      <span className="phone-tab">Profile</span>
+    </div>
+  );
+
   const screenSections = [
     {
       id: 'home',
       title: 'Home',
       copy: 'Start with a quick greeting and one-tap access to shop all products. See deals and promotions, frequently bought reminders, and AI-style recommendations so you never forget the essentials.',
+      screenshot: 'assets/screens/home.png',
       mockup: (
         <div className="mockup-home app-content">
           <img src="assets/logo.png" alt="" className="mockup-logo" />
@@ -62,6 +73,7 @@ function App() {
       id: 'shop',
       title: 'Shop all products',
       copy: 'Browse 125+ products with search and category filters. Tap a product for details, nutrition tips, and healthier alternatives. Add to cart in one tap and checkout with cash on delivery.',
+      screenshot: 'assets/screens/shop.png',
       mockup: (
         <div className="mockup-shop app-content">
           <div className="mockup-search" />
@@ -84,6 +96,7 @@ function App() {
       id: 'cart',
       title: 'Cart & checkout',
       copy: 'Search or type to add items to your list. Check off as you shop, see live total, and place your order with cash on delivery. Simple list view and one-tap checkout.',
+      screenshot: 'assets/screens/cart.png',
       mockup: (
         <div className="mockup-cart app-content">
           <div className="mockup-input" />
@@ -107,6 +120,7 @@ function App() {
     {
       id: 'recipes',
       title: 'Recipes & suggestions',
+      screenshot: 'assets/screens/recipes.png',
       copy: 'Get recipe ideas based on what’s on your list. Suggested from your list and full recipe list with prep time and ingredients. Premium members unlock exclusive recipes.',
       mockup: (
         <div className="mockup-recipes app-content">
@@ -125,7 +139,7 @@ function App() {
       <header className={`landing-header ${headerScrolled ? 'scrolled' : ''}`}>
         <div className="header-inner">
           <img src="assets/logo.png" alt="Punjab Cash & Carry" className="header-logo" />
-          <a href="https://play.google.com/store/apps/details?id=pk.com.punjabcashandcarry.punjab" className="cta-header" target="_blank" rel="noopener noreferrer">
+          <a href="/app.apk" className="cta-header" download="Punjab-Cash-Carry.apk">
             Download App
           </a>
         </div>
@@ -150,8 +164,8 @@ function App() {
               <span>Recipes & deals</span>
             </div>
             <div className="hero-buttons">
-              <a href="https://play.google.com/store/apps/details?id=pk.com.punjabcashandcarry.punjab" className="btn btn-primary" target="_blank" rel="noopener noreferrer">
-                Get on Google Play
+              <a href="/app.apk" className="btn btn-primary" download="Punjab-Cash-Carry.apk">
+                Download APK
               </a>
               <a href="#screens" className="btn btn-secondary">See app screens</a>
             </div>
@@ -164,6 +178,7 @@ function App() {
                   <div key={i} className={`screen-slide ${i === activeScreen ? 'active' : i < activeScreen ? 'prev' : ''}`}>
                     <div className="app-bar"><span>{screen.bar}</span></div>
                     <div className="app-content">{screen.content}</div>
+                    {tabBarDots}
                     <div className="dot-row">
                       {heroScreens.map((_, j) => (
                         <div key={j} className={`dot ${j === activeScreen ? 'active' : ''}`} />
@@ -174,6 +189,15 @@ function App() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="banner-strip">
+        <div className="banner-strip-inner">
+          <span className="banner-item">125+ Products</span>
+          <span className="banner-item">Cash on Delivery</span>
+          <span className="banner-item">Recipes & Deals</span>
+          <span className="banner-item">Voice Add</span>
         </div>
       </section>
 
@@ -192,7 +216,11 @@ function App() {
             <div className="phone-frame">
               <div className="phone-screen">
                 <div className="phone-notch" />
-                {section.mockup}
+                <div className="screen-shot-wrap">
+                  <img src={section.screenshot} alt={section.title} className="screen-shot-img" onError={(e) => { e.target.style.display = 'none'; e.target.nextElementSibling.style.display = 'block'; }} />
+                  <div className="screen-shot-fallback" style={{ display: 'none' }}>{section.mockup}</div>
+                </div>
+                {tabBarDots}
               </div>
             </div>
           </div>
@@ -208,8 +236,8 @@ function App() {
         <p className="section-sub">
           Download the app and get started with lists, deals, and COD checkout.
         </p>
-        <a href="https://play.google.com/store/apps/details?id=pk.com.punjabcashandcarry.punjab" className="btn btn-primary" target="_blank" rel="noopener noreferrer">
-          Download for Android
+        <a href="/app.apk" className="btn btn-primary" download="Punjab-Cash-Carry.apk">
+          Download APK for Android
         </a>
       </section>
 
@@ -218,7 +246,7 @@ function App() {
         <p>DHA Phase 2, Islamabad</p>
         <div className="footer-links">
           <a href="https://punjabcashandcarry.com.pk" target="_blank" rel="noopener noreferrer">Website</a>
-          <a href="https://play.google.com/store/apps/details?id=pk.com.punjabcashandcarry.punjab" target="_blank" rel="noopener noreferrer">Google Play</a>
+          <a href="/app.apk" download="Punjab-Cash-Carry.apk">Download APK</a>
         </div>
       </footer>
     </>

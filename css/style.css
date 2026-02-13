@@ -95,7 +95,7 @@ h1, h2, h3, .hero-title, .section-title {
   box-shadow: 0 6px 20px var(--red-glow);
 }
 
-/* Hero – gradient mesh + badge + stats */
+/* Hero – gradient mesh + badge + stats + banner feel */
 .hero {
   min-height: 100vh;
   padding: 6rem 1.5rem 5rem;
@@ -111,22 +111,23 @@ h1, h2, h3, .hero-title, .section-title {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 80% 50% at 20% 40%, rgba(196, 30, 58, 0.08) 0%, transparent 50%),
-    radial-gradient(ellipse 60% 40% at 80% 60%, rgba(37, 99, 235, 0.06) 0%, transparent 50%),
-    linear-gradient(180deg, var(--off-white) 0%, var(--white) 100%);
+    radial-gradient(ellipse 100% 80% at 30% 20%, rgba(196, 30, 58, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse 80% 60% at 70% 80%, rgba(26, 54, 93, 0.1) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 40% at 80% 30%, rgba(37, 99, 235, 0.06) 0%, transparent 50%),
+    linear-gradient(165deg, #fafafa 0%, var(--off-white) 40%, var(--white) 100%);
   z-index: 0;
 }
 
 .hero::after {
   content: '';
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gray-200), transparent);
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c41e3a' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  opacity: 0.6;
+  pointer-events: none;
   z-index: 0;
 }
+
 
 .hero-inner {
   max-width: 1140px;
@@ -330,6 +331,8 @@ h1, h2, h3, .hero-title, .section-title {
   border-radius: 28px;
   overflow: hidden;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .phone-notch {
@@ -352,6 +355,9 @@ h1, h2, h3, .hero-title, .section-title {
   transform: translateX(16px);
   transition: opacity 0.5s ease, transform 0.5s ease;
   pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 56px;
 }
 
 .screen-slide.active {
@@ -386,7 +392,8 @@ h1, h2, h3, .hero-title, .section-title {
   background: var(--white);
   border-radius: 14px;
   padding: 14px;
-  min-height: 360px;
+  flex: 1;
+  min-height: 200px;
   box-shadow: 0 2px 12px rgba(0,0,0,0.06);
 }
 
@@ -401,6 +408,48 @@ h1, h2, h3, .hero-title, .section-title {
 .mini-card { flex: 1; height: 56px; background: var(--gray-100); border-radius: 10px; }
 .mini-card.wide { flex: 0 0 100%; height: 44px; }
 
+/* Phone bottom tab bar (matches app) */
+.phone-tabbar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 48px;
+  background: var(--white);
+  border-top: 1px solid var(--gray-200);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 4px 0 8px;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.04);
+}
+.phone-tab {
+  font-size: 0.55rem;
+  color: var(--gray-500);
+  font-weight: 500;
+}
+.phone-tab.active { color: var(--red); font-weight: 600; }
+
+/* Screenshot or mockup inside phone */
+.screen-shot-wrap {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+.screen-shot-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+.screen-shot-fallback {
+  position: absolute;
+  inset: 0;
+  overflow: auto;
+}
+
 .dot-row { display: flex; gap: 6px; margin-top: 12px; }
 .dot {
   width: 6px;
@@ -413,6 +462,37 @@ h1, h2, h3, .hero-title, .section-title {
   background: var(--red);
   width: 20px;
   border-radius: 3px;
+}
+
+/* Banner strip */
+.banner-strip {
+  background: linear-gradient(135deg, var(--red) 0%, var(--red-dark) 100%);
+  padding: 1.5rem 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.banner-strip::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.06' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 20V40H20L40 20z'/%3E%3C/g%3E%3C/svg%3E");
+  pointer-events: none;
+}
+.banner-strip-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem 3rem;
+  position: relative;
+  z-index: 1;
+}
+.banner-item {
+  color: rgba(255,255,255,0.95);
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
 }
 
 /* Screen sections – alternating bg, slide-in */
@@ -465,7 +545,7 @@ h1, h2, h3, .hero-title, .section-title {
 }
 
 .screen-section:nth-child(odd) {
-  background: var(--white);
+  background: linear-gradient(180deg, var(--white) 0%, #fafafa 100%);
 }
 
 .screen-section:nth-child(even) {
@@ -508,7 +588,7 @@ h1, h2, h3, .hero-title, .section-title {
 
 .screen-mockup-wrap .phone-screen {
   border-radius: 26px;
-  padding: 2.25rem 0.75rem 0.75rem;
+  padding: 2.25rem 0.75rem 0;
 }
 
 .screen-mockup-wrap .app-content {
